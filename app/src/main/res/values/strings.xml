@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Drunk Games</string>
+    <string name="press">Нажми</string>
+    <string name="pull">Тяни</string>
+    <string name="cream">Кричи</string>
+    <string name="shake">Тряси</string>
+    <string name="pass">Передай другому!</string>
+    <string name="game_started">Игра началась!</string>
+
+</resources>
