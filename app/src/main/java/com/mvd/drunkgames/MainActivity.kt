@@ -1,11 +1,13 @@
 package com.mvd.drunkgames
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.mvd.drunkgames.modules.GameEvents
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +27,18 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
         findViewById<Button>(R.id.start_btn).setOnClickListener {
-            viewModel.startGame()
+            startGame()
         }
 
+    }
+
+    private fun startGame() {
+        viewModel.startGame()
+        viewModel.currentEvent.observe(this, Observer<GameEvents> {
+            if (it == GameEvents.SHAKE)
+                Log.d("AAA", "Shake")
+        })
     }
 
 

@@ -3,12 +3,16 @@ package com.mvd.drunkgames
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.mvd.drunkgames.modules.GameEvents
+import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private lateinit var soundModule: SoundModule
+    private lateinit var shakeModule: ShakeModule
     val errorMessage = MutableLiveData<String>()
+    val currentEvent = MutableLiveData<GameEvents>()
 
     /** Here we can show progress bar or some kind of it
      *  handle exception or something else
@@ -25,11 +29,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 errorMessage.postValue(it)
             }
         }
+        shakeModule = ShakeModule(getApplication()) {
+            currentEvent.postValue(it)
+        }
     }
 
 
     fun startGame() {
         soundModule.playText(R.string.game_started)
+        shakeModule.subscribeUpdates()
     }
 
 
@@ -38,6 +46,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
      */
 
     override fun onCleared() {
+        shakeModule.unSubscribeUpdates()
         super.onCleared()
 
     }
