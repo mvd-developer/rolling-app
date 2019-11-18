@@ -50,9 +50,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.setUserAction(GameEvents.SCREAM)
         }
 
-        findViewById<Button>(R.id.shake_btn).setOnClickListener {
-            viewModel.setUserAction(GameEvents.SHAKE)
-        }
+        //Because we already have this module up and running
+//        findViewById<Button>(R.id.shake_btn).setOnClickListener {
+//            viewModel.setUserAction(GameEvents.SHAKE)
+//        }
     }
 
 

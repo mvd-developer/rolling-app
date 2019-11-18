@@ -49,7 +49,8 @@
             android:layout_height="wrap_content"
             android:text="@string/shake"
             tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="307dp" />
+            tools:layout_editor_absoluteY="307dp"
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/scream_btn"
