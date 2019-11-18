@@ -1,10 +1,16 @@
 package com.mvd.drunkgames
 
+import android.Manifest
+import android.Manifest.permission.RECORD_AUDIO
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mvd.drunkgames.modules.GameEvents
@@ -12,6 +18,7 @@ import com.mvd.drunkgames.modules.GameEvents
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
+    private val RECORD_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +61,27 @@ class MainActivity : AppCompatActivity() {
 //        findViewById<Button>(R.id.shake_btn).setOnClickListener {
 //            viewModel.setUserAction(GameEvents.SHAKE)
 //        }
+            startGame()
+        }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(RECORD_AUDIO),
+                RECORD_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun startGame() {
+        viewModel.startGame()
+        viewModel.currentEvent.observe(this, Observer<GameEvents> {
+            if (it == GameEvents.SHAKE)
+                Log.d("AAA", "Shake")
+        })
     }
 
 

@@ -13,11 +13,13 @@ import com.mvd.drunkgames.modules.SoundModule
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+import com.mvd.drunkgames.modules.VoiceDetectModule
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private lateinit var soundModule: SoundModule
     private lateinit var shakeModule: ShakeModule
+    private lateinit var voiceDetectModule: VoiceDetectModule
     val errorMessage = MutableLiveData<String>()
     val userFailed = SingleLiveEvent<Boolean>()
     private val delayHandler = Handler()
