@@ -57,24 +57,18 @@ class MainActivity : AppCompatActivity() {
             viewModel.setUserAction(GameEvents.SCREAM)
         }
 
-        //Because we already have this module up and running
-//        findViewById<Button>(R.id.shake_btn).setOnClickListener {
-//            viewModel.setUserAction(GameEvents.SHAKE)
-//        }
-//            startGame()
+        if (ContextCompat.checkSelfPermission(
+                this,
+                RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(RECORD_AUDIO),
+                RECORD_REQUEST_CODE
+            )
         }
-//        if (ContextCompat.checkSelfPermission(
-//                this,
-//                RECORD_AUDIO
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                this,
-//                arrayOf(RECORD_AUDIO),
-//                RECORD_REQUEST_CODE
-//            )
-//        }
-//    }
+    }
 
 //    private fun startGame() {
 //        viewModel.startGame()
@@ -93,8 +87,8 @@ class MainActivity : AppCompatActivity() {
     //TODO: replace for something better
     private fun showUserFailedDialog() {
         AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage("Your failed the mission!")
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage("Your failed the mission!")
+            .show()
     }
 }

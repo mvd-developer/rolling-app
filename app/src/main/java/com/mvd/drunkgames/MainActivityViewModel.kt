@@ -34,6 +34,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
+    private lateinit var voiceDetectLiveData: LiveData<GameEvents>
 
 
     /** Here we can show progress bar or some kind of it
@@ -45,6 +46,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 //sound module is initialized
                 // go ahead
                 shakeModule = ShakeModule(getApplication())
+                voiceDetectModule = VoiceDetectModule(getApplication())
             } else {
                 //show error message
                 errorMessage.postValue(it)
@@ -55,13 +57,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun startGame() {
         isGameStarted = true
-        soundModule.playText(R.string.game_started)
+       // soundModule.playText(R.string.game_started)
         postDelayed(1500) {
-            soundModule.playMusic()
+            //soundModule.playMusic()
             startNewGame()
         }
         shakeEventLiveData = shakeModule.subscribeUpdates()
         shakeEventLiveData.observeForever(currentEventObserver)
+        voiceDetectLiveData = voiceDetectModule.subscribeUpdates()
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -84,7 +87,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         //store current value
         currentRound = getCurrentRound(Random().nextInt(5))
         //tell the user what to do
-        playRoundSound(currentRound)
+      //  playRoundSound(currentRound)
         //give him time to think about it
         postDelayed(timeToWin) {
             validateResult()
@@ -98,6 +101,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             soundModule.stopMusic()
             userFailed.postValue(true)
         }
+        userFailed.postValue(true)
     }
 
 
