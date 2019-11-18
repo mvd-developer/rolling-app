@@ -61,28 +61,28 @@ class MainActivity : AppCompatActivity() {
 //        findViewById<Button>(R.id.shake_btn).setOnClickListener {
 //            viewModel.setUserAction(GameEvents.SHAKE)
 //        }
-            startGame()
+//            startGame()
         }
-        if (ContextCompat.checkSelfPermission(
-                this,
-                RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(RECORD_AUDIO),
-                RECORD_REQUEST_CODE
-            )
-        }
-    }
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                RECORD_AUDIO
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(RECORD_AUDIO),
+//                RECORD_REQUEST_CODE
+//            )
+//        }
+//    }
 
-    private fun startGame() {
-        viewModel.startGame()
-        viewModel.currentEvent.observe(this, Observer<GameEvents> {
-            if (it == GameEvents.SHAKE)
-                Log.d("AAA", "Shake")
-        })
-    }
+//    private fun startGame() {
+//        viewModel.startGame()
+//        viewModel.currentEvent.observe(this, Observer<GameEvents> {
+//            if (it == GameEvents.SHAKE)
+//                Log.d("AAA", "Shake")
+//        })
+//    }
 
 
     //TODO: replace for something better
