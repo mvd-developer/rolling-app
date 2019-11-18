@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
+import com.mvd.drunkgames.modules.VoiceDetectModule
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private lateinit var soundModule: SoundModule
     private lateinit var shakeModule: ShakeModule
+    private lateinit var voiceDetectModule: VoiceDetectModule
     val errorMessage = MutableLiveData<String>()
     val currentEvent = MutableLiveData<GameEvents>()
 
