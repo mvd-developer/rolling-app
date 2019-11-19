@@ -61,17 +61,20 @@ class MainActivity : AppCompatActivity() {
 
 
             /////////////////////////////
-
+            var text = "";
             if (start_btn.text.equals(applicationContext.getString(R.string.stop_game))) {
+                text = applicationContext.getString(R.string.start_game)
+                findViewById<SeekBar>(R.id.seekBar).setEnabled(true);
                 viewModel.unSubscribeUpdatesVoiceDetectModule()
             }
 
             if (start_btn.text.equals(applicationContext.getString(R.string.start_game))) {
-                start_btn.text = applicationContext.getString(R.string.stop_game)
+                text = applicationContext.getString(R.string.stop_game)
                 findViewById<TextView>(R.id.maxVol).text = "max volume"
                 viewModel.startGame()
                 findViewById<SeekBar>(R.id.seekBar).setEnabled(false);
             }
+            start_btn.text = text
             /////////////////////
 
         }
