@@ -12,12 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="88dp"
         android:text="@string/start_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testVoiceViews" />
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -26,10 +28,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/start_btn"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -47,10 +47,10 @@
             android:id="@+id/shake_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/shake"
             tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="307dp"
-            android:enabled="false"/>
+            tools:layout_editor_absoluteY="307dp" />
 
         <Button
             android:id="@+id/scream_btn"
@@ -65,7 +65,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pull" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/testVoiceViews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttons"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/maxVol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#E9DB82"
+            android:gravity="center"
+            android:text="max volume"
+            android:textSize="20sp" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:max="50000"
+            android:progress="27000" />
+        <TextView
+            android:id="@+id/seekBarVal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#F38F99"
+            android:gravity="center"
+            android:text="limit for voice detection"
+            android:textSize="20sp" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

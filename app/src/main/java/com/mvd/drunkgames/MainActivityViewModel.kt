@@ -22,6 +22,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private lateinit var voiceDetectModule: VoiceDetectModule
     val errorMessage = MutableLiveData<String>()
     val userFailed = SingleLiveEvent<Boolean>()
+    val currentVolume = SingleLiveEvent<String>()
+    val maxVolume = SingleLiveEvent<String>()
     private val delayHandler = Handler()
     private var currentRound = GameEvents.PASS
     private var userAction = GameEvents.PASS
@@ -31,10 +33,22 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val currentEventObserver = Observer<GameEvents> { t ->
         if (t != null) {
             userAction = t
+            if (t == GameEvents.SCREAM)
+                userFailed.postValue(true)
         }
     }
+
+    private val maxVolumeObserver = Observer<String> { t ->
+        maxVolume.postValue(t)
+    }
+    ///////////////////////////
+
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
     private lateinit var voiceDetectLiveData: LiveData<GameEvents>
+
+
+    /////////
+    lateinit var maxVolumeLiveData: LiveData<String>
 
 
     /** Here we can show progress bar or some kind of it
@@ -57,14 +71,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun startGame() {
         isGameStarted = true
-       // soundModule.playText(R.string.game_started)
+        // soundModule.playText(R.string.game_started)
         postDelayed(1500) {
-            //soundModule.playMusic()
+            soundModule.playMusic()
             startNewGame()
         }
         shakeEventLiveData = shakeModule.subscribeUpdates()
         shakeEventLiveData.observeForever(currentEventObserver)
         voiceDetectLiveData = voiceDetectModule.subscribeUpdates()
+        voiceDetectLiveData.observeForever(currentEventObserver)
+        /////////////////////////
+        maxVolumeLiveData = voiceDetectModule.getMaxVolumeLiveData()
+        maxVolumeLiveData.observeForever(maxVolumeObserver)
+        ////////////////////////
+
+    }
+    fun unSubscribeUpdatesVoiceDetectModule(){
+        voiceDetectModule.unSubscribeUpdates()
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -87,7 +110,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         //store current value
         currentRound = getCurrentRound(Random().nextInt(5))
         //tell the user what to do
-      //  playRoundSound(currentRound)
+        //  playRoundSound(currentRound)
         //give him time to think about it
         postDelayed(timeToWin) {
             validateResult()
@@ -101,7 +124,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             soundModule.stopMusic()
             userFailed.postValue(true)
         }
-        userFailed.postValue(true)
+        userFailed.postValue(false)
     }
 
 
@@ -113,6 +136,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         soundModule.stopMusic()
     }
 
+    fun setMinScreamLimit(minScreamLimit: Int) {
+      voiceDetectModule.setMinScreamLimit(minScreamLimit)
+    }
 
     private fun getCurrentRound(round: Int): GameEvents {
         return when (round) {
@@ -139,13 +165,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
      * Here we have to unsubscribe from all the observable game modules
      */
 
-    override fun onCleared() {
+    override public fun onCleared() {
         shakeModule.unSubscribeUpdates()
+        voiceDetectModule.unSubscribeUpdates()
         super.onCleared()
         soundModule.onDestroy()
 
         if (shakeEventLiveData.hasObservers()) {
             shakeEventLiveData.removeObserver(currentEventObserver)
+        }
+        if (voiceDetectLiveData.hasObservers()) {
+            voiceDetectLiveData.removeObserver(currentEventObserver)
+        }
+        if (maxVolumeLiveData.hasObservers()) {
+            maxVolumeLiveData.removeObserver(maxVolumeObserver)
         }
     }
 }
