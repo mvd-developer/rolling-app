@@ -13,6 +13,7 @@ import com.mvd.drunkgames.modules.SoundModule
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+private const val CONST_TIME_BETWEEN_ROUNDS = 4000L
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -68,6 +69,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun startNewGame() {
+        timeBetweenRounds = CONST_TIME_BETWEEN_ROUNDS
         Thread {
             while (isGameStarted) {
                 playOneRound()
