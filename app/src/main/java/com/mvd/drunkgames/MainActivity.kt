@@ -5,8 +5,11 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.LinearInterpolator
+import android.widget.ProgressBar
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.airbnb.lottie.LottieAnimationView
+import com.mvd.drunkgames.base.Chronometer
 import com.mvd.drunkgames.base.DialogCallback
 import com.mvd.drunkgames.base.showErrorMessage
 import com.mvd.drunkgames.modules.GameEvents
@@ -31,6 +35,9 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     private lateinit var seekBar: SeekBar
     private var numberOfRounds = 0
 
+    private lateinit var progressBarCircle: ProgressBar
+    private lateinit var chronometer: Chronometer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -42,6 +49,8 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         tvCurrentRound = findViewById(R.id.tv_current_round)
         tvCurrentRound.text = getString(R.string.current_round, numberOfRounds)
 
+        chronometer = findViewById(R.id.chronometer)
+        progressBarCircle = findViewById(R.id.time_controller)
         lottieBtnStart = findViewById(R.id.btn_start)
         seekBar = findViewById(R.id.pull_btn)
 
@@ -63,7 +72,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             }
         })
 
-        viewModel.numberOfRoundsLiveData.observe(this, Observer<Int>{
+        viewModel.numberOfRoundsLiveData.observe(this, Observer<Int> {
             if (it != null) {
                 numberOfRounds = it
                 tvCurrentRound.text = getString(R.string.current_round, numberOfRounds)
@@ -75,6 +84,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             if (viewModel.isGameStarted) {
                 viewModel.setUserAction(GameEvents.CLICK)
             } else {
+                startTimer()
                 tvButtonText.setText(R.string.click)
                 viewModel.startGame()
             }
@@ -109,8 +119,28 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         })
     }
 
+    private fun startTimer() {
+        chronometer.base = SystemClock.elapsedRealtime()
+        chronometer.stop()
+        chronometer.start()
+
+    }
+
+
+    private fun startProgress(value: Long) {
+        val anim = ValueAnimator.ofInt(1, progressBarCircle.max)
+        anim.duration = value
+        anim.interpolator = LinearInterpolator()
+        anim.addUpdateListener { animation ->
+            val animProgress = animation.animatedValue as Int
+            progressBarCircle.progress = animProgress
+        }
+        anim.start()
+    }
+
 
     private fun showUserFailedDialog() {
+        chronometer.stop()
         tvButtonText.setText(R.string.start_game)
         DialogFailed.getInstance(numberOfRounds)
                 .show(supportFragmentManager, DialogFailed::class.java.simpleName)
@@ -118,6 +148,8 @@ class MainActivity : AppCompatActivity(), DialogCallback {
 
 
     override fun playAgain() {
+        startTimer()
+        tvButtonText.setText(R.string.click)
         viewModel.startGame()
     }
 

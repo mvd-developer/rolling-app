@@ -44,11 +44,12 @@ class DialogFailed : DialogFragment() {
 
 
         okButton.setOnClickListener {
+            this.dismiss()
             (activity as DialogCallback).playAgain()
         }
 
         cancelButton.setOnClickListener {
-            dialog?.dismiss()
+            this.dismiss()
         }
 
         arguments?.let {

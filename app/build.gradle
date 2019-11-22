@@ -69,6 +69,4 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
 
-    //for custom seek bar
-    implementation 'com.sdsmdg.harjot:croller:1.0.7'
 }
