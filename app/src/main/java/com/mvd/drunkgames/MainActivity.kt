@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     private lateinit var seekBar: SeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
