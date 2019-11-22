@@ -4,67 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="88dp"
-        android:text="@string/start_game"
+
+    <com.sdsmdg.harjot.crollerTest.Croller
+        android:id="@+id/time_controller"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:back_circle_color="#EDEDED"
+        app:indicator_color="@color/colorAccent"
+        app:indicator_width="0.1"
+        app:is_continuous="true"
+        app:label=""
+        app:layout_constraintBottom_toTopOf="@+id/bg_shape_rectangle"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:main_circle_color="#FFFFFF"
+        app:max="1000"
+        app:progress_primary_color="@color/colorAccent"
+        app:progress_secondary_color="#EEEEEE"
+        app:start_offset="45" />
+
+
+    <View
+        android:id="@+id/bg_shape_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/bd_rectangle_rounded_corners"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
+
+    <SeekBar
+        android:id="@+id/pull_btn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/start_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:splitTrack="false"
+        android:thumb="@drawable/custom_thumb"
+        android:thumbOffset="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/bg_shape_rectangle"
+        app:layout_constraintStart_toStartOf="@+id/bg_shape_rectangle"
+        app:layout_constraintTop_toTopOf="@+id/bg_shape_rectangle" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/btn_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_shape_rectangle"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/bg_shape_rectangle"
+        app:layout_constraintStart_toStartOf="@+id/bg_shape_rectangle"
+        app:layout_constraintTop_toBottomOf="@+id/pull_btn"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/press_button" />
 
-        <Button
-            android:id="@+id/click_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/click"
-            tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="180dp" />
+    <TextView
+        android:id="@+id/tv_btn_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_game"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_start"
+        app:layout_constraintEnd_toEndOf="@+id/btn_start"
+        app:layout_constraintStart_toStartOf="@+id/btn_start"
+        app:layout_constraintTop_toTopOf="@+id/btn_start"
+        android:textColor="@android:color/white"/>
 
-        <Button
-            android:id="@+id/shake_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/shake"
-            tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="307dp"
-            android:enabled="false"/>
-
-        <Button
-            android:id="@+id/scream_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/scream"
-            tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="386dp" />
-
-        <Button
-            android:id="@+id/pull_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/pull" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

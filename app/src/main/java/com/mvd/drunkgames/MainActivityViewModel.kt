@@ -14,6 +14,7 @@ import com.mvd.drunkgames.preferences.PrefsManager
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+private const val CONST_TIME_BETWEEN_ROUNDS = 4000L
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -26,7 +27,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var userAction = GameEvents.PASS
     private var timeBetweenRounds = 4000L
     private var timeToWin = 2000L
-    private var isGameStarted = false
+    var isGameStarted = false
+    private set
     private val currentEventObserver = Observer<GameEvents> { t ->
         if (t != null) {
             userAction = t
@@ -69,6 +71,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun startNewGame() {
+        timeBetweenRounds = CONST_TIME_BETWEEN_ROUNDS
         Thread {
             while (isGameStarted) {
                 playOneRound()
