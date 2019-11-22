@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SeekBarPreference
+        android:key="microphone"
+        android:title="@string/mic_sensitivity"
+        android:max="10"
+        android:defaultValue="5" />
+
+    <SeekBarPreference
+        android:key="accelerometr"
+        android:title="@string/acc_sensitivity"
+        android:max="16"
+        android:defaultValue="8" />
+
+    <DropDownPreference
+        android:key="game_mode"
+        android:title="@string/game_mode"
+        android:entries="@array/entries"
+        app:useSimpleSummaryProvider="true"
+        android:entryValues="@array/entry_values"/>
+
+
+
+
+</androidx.preference.PreferenceScreen>

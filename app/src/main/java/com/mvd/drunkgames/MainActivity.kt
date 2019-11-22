@@ -1,6 +1,7 @@
 package com.mvd.drunkgames
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,13 +15,14 @@ import com.airbnb.lottie.LottieAnimationView
 import com.mvd.drunkgames.base.DialogCallback
 import com.mvd.drunkgames.base.showErrorMessage
 import com.mvd.drunkgames.modules.GameEvents
+import com.mvd.drunkgames.preferences.SettingsActivity
 
 
 class MainActivity : AppCompatActivity(), DialogCallback {
 
 
     private lateinit var viewModel: MainActivityViewModel
-    private lateinit var tvButtonText : TextView
+    private lateinit var tvButtonText: TextView
     private lateinit var lottieBtnStart: LottieAnimationView
     private lateinit var seekBar: SeekBar
 
@@ -61,7 +63,6 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         seekBar = findViewById(R.id.pull_btn)
 
 
-
 //        findViewById<Button>(R.id.pull_btn).setOnClickListener {
 //            viewModel.setUserAction(GameEvents.PULL)
 //        }
@@ -82,12 +83,12 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     //TODO: replace for something better
     private fun showUserFailedDialog() {
         AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage("Your failed the mission!")
-                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage("Your failed the mission!")
+            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 
@@ -114,10 +115,9 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                //start new activity
-
+                this.startActivity(Intent(this, SettingsActivity::class.java))
                 true
-                }
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

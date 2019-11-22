@@ -10,6 +10,7 @@ import com.mvd.drunkgames.base.SingleLiveEvent
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
+import com.mvd.drunkgames.preferences.PrefsManager
 import java.util.*
 import java.util.concurrent.TimeUnit
 
