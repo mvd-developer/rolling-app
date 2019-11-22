@@ -1,15 +1,13 @@
 package com.mvd.drunkgames
 
 import android.Manifest.permission
-import android.content.pm.PackageManager
-import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -87,38 +85,23 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             }
         })
 
-
-//        findViewById<Button>(R.id.scream_btn).setOnClickListener {
-//            viewModel.setUserAction(GameEvents.SCREAM)
-//        }
-
-
-//        val dialog = Dialog(this)
-//        dialog.requestWindowFeature(FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.dialog_failed)
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        dialog.show()
     }
 
 
     //TODO: replace for something better
     private fun showUserFailedDialog() {
-        AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage("Your failed the mission!")
-                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+        DialogFailed.getInstance(viewModel.numberOfRounds)
+            .show(supportFragmentManager, DialogFailed::class.java.simpleName)
     }
 
 
     override fun playAgain() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.startGame()
     }
 
     override fun cancel() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //do nothing
+        //sign out maybe?
     }
 
 

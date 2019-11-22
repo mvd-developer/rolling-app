@@ -11,7 +11,6 @@ import com.mvd.drunkgames.base.SingleLiveEvent
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
-import com.mvd.drunkgames.preferences.PrefsManager
 import com.mvd.drunkgames.modules.VoiceDetectModule
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -31,7 +30,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var timeBetweenRounds = 4000L
     private var timeToWin = 2000L
     var isGameStarted = false
-    private set
+        private set
+
+    var numberOfRounds = 0
+        private set
+
     private val currentEventObserver = Observer<GameEvents> { t ->
         if (t != null) {
             userAction = t
