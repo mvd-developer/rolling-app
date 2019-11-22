@@ -7,7 +7,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.mvd.drunkgames.preferences.SettingsFragment
 import com.mvd.drunkgames.modules.GameEvents
+import com.mvd.drunkgames.preferences.PrefsManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
 

@@ -8,14 +8,17 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
+import com.mvd.drunkgames.preferences.PrefsManager
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 
 class ShakeModule(application: Application) :
     GameController(application), SensorEventListener {
+
     private val MIN_TIME_BETWEEN_SHAKES_MILLISECS = 1000
-    private val SHAKE_THRESHOLD = 80f
+    private var SHAKE_THRESHOLD = 80f
 
     private var sensorManager: SensorManager
     private var accelerometer: Sensor
@@ -26,6 +29,7 @@ class ShakeModule(application: Application) :
     init {
         sensorManager = application.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        SHAKE_THRESHOLD = PrefsManager.getAccelerometrSensitivity()
     }
 
     override fun subscribeUpdates(): LiveData<GameEvents> {
