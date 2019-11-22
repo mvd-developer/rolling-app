@@ -8,36 +8,31 @@
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="88dp"
-        android:text="@string/start_game"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/start_btn"
+    <com.sdsmdg.harjot.crollerTest.Croller
+        android:id="@+id/time_controller"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:back_circle_color="#EDEDED"
+        app:indicator_color="@color/colorAccent"
+        app:indicator_width="0.1"
+        app:is_continuous="true"
+        app:label=""
+        app:layout_constraintBottom_toTopOf="@+id/bg_shape_rectangle"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:main_circle_color="#FFFFFF"
+        app:max="1000"
+        app:progress_primary_color="@color/colorAccent"
+        app:progress_secondary_color="#EEEEEE"
+        app:start_offset="45" />
 
-
-    </LinearLayout>
 
     <View
         android:id="@+id/bg_shape_rectangle"
@@ -67,7 +62,7 @@
         app:layout_constraintTop_toTopOf="@+id/bg_shape_rectangle" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/click_btn"
+        android:id="@+id/btn_start"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -86,18 +81,18 @@
         app:lottie_rawRes="@raw/press_button" />
 
     <TextView
-        android:id="@+id/tv_click"
+        android:id="@+id/tv_btn_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/click"
+        android:text="@string/start_game"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/click_btn"
-        app:layout_constraintEnd_toEndOf="@+id/click_btn"
-        app:layout_constraintStart_toStartOf="@+id/click_btn"
-        app:layout_constraintTop_toTopOf="@+id/click_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_start"
+        app:layout_constraintEnd_toEndOf="@+id/btn_start"
+        app:layout_constraintStart_toStartOf="@+id/btn_start"
+        app:layout_constraintTop_toTopOf="@+id/btn_start"
         android:textColor="@android:color/white"/>
 
 
