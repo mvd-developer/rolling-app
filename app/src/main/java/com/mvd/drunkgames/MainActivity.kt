@@ -1,22 +1,35 @@
 package com.mvd.drunkgames
 
+import android.Manifest.permission
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mvd.drunkgames.modules.GameEvents
 
 class MainActivity : AppCompatActivity() {
-
+    private val RECORD_REQUEST_CODE = 101
     private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        if (ContextCompat.checkSelfPermission(
+                this,
+                permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(permission.RECORD_AUDIO),
+                RECORD_REQUEST_CODE
+            )
+        }
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
 
         viewModel.prepareAllModules()
@@ -65,8 +78,8 @@ class MainActivity : AppCompatActivity() {
     //TODO: replace for something better
     private fun showUserFailedDialog() {
         AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage("Your failed the mission!")
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage("Your failed the mission!")
+            .show()
     }
 }
