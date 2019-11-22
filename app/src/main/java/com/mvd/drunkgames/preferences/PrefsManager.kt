@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
+import android.preference.PreferenceManager
 
 @SuppressLint("StaticFieldLeak")
 object PrefsManager {
@@ -21,12 +21,21 @@ object PrefsManager {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-    fun getMicrophoneSensitivity(): Float {
-        return sharedPreferences.getInt(MICROPHONE, 1).toFloat()
+
+    fun getVoiceDetectionLowBoarder(): Int {
+        return sharedPreferences.getInt(MICROPHONE, 20000)
+    }
+
+    fun setVoiceDetectionLowBoarder(boarder: Int) {
+        sharedPreferences.edit().putInt(MICROPHONE, boarder)
     }
 
     fun getAccelerometrSensitivity(): Float {
-        return sharedPreferences.getInt(ACCELEROMETR, 10).toFloat()
+        return sharedPreferences.getFloat(ACCELEROMETR, 12f)
+    }
+
+    fun setAccelerometrSensitivity(sensitivity: Float) {
+        sharedPreferences.edit().putFloat(ACCELEROMETR, sensitivity)
     }
 
     fun getGameMode(): Int {

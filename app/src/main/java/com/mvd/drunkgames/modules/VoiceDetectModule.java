@@ -10,12 +10,14 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.mvd.drunkgames.preferences.PrefsManager;
+
 import org.jetbrains.annotations.NotNull;
 
 
 public class VoiceDetectModule extends GameController {
 
-    private int MIN_SCREAM_LIMIT = 23000;
+    private int MIN_SCREAM_LIMIT = 20000;
     private MutableLiveData<GameEvents> liveData = new MutableLiveData<>();
     final Handler handler = new Handler();
     int minSize;
@@ -41,16 +43,20 @@ public class VoiceDetectModule extends GameController {
     public VoiceDetectModule(Application application) {
         super(application);
         this.context = application;
+        MIN_SCREAM_LIMIT = PrefsManager.INSTANCE.getVoiceDetectionLowBoarder();
+      //  MIN_SCREAM_LIMIT = PreferenceManager.getDefaultSharedPreferences(application).getInt(MICROPHONE, 15000);
     }
 
     @Override
     public LiveData<GameEvents> subscribeUpdates() {
+
+        Log.e("_cry", "MIN_SCREAM_LIMIT=" + MIN_SCREAM_LIMIT);
         startDetection();
         return liveData;
     }
 
     @NotNull
-   // @Override
+    // @Override
     public LiveData<String> getMaxVolumeLiveData() {
         return maxVolumeLiveData;
     }
@@ -89,7 +95,7 @@ public class VoiceDetectModule extends GameController {
                             Log.e("_cry", "Blow Value HIGH=" + blow_value);
                             maxVolumeLiveData.postValue(String.valueOf(blow_value));
                             liveData.postValue(GameEvents.SCREAM);
-                          //  break;
+                            //  break;_curEventObs
                         }
                     }
                 }

@@ -9,7 +9,6 @@ import android.hardware.SensorManager
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
 import com.mvd.drunkgames.preferences.PrefsManager
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -56,7 +55,7 @@ class ShakeModule(application: Application) :
                                 y.toDouble().pow(2.0) +
                                 z.toDouble().pow(2.0)
                     ) - SensorManager.GRAVITY_EARTH)
-                    Log.e("_acs", "acceleration Value=$acceleration")
+//                    Log.e("_acs", "acceleration Value=$acceleration")
                     if (acceleration > SHAKE_THRESHOLD) {
                         mLastShakeTime = curTime
                         liveData.postValue(GameEvents.SHAKE)
