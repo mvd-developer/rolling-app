@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class VoiceDetectModule extends GameController {
 
-    private int MIN_SCREAM_LIMIT = 7000;
+    private int MIN_SCREAM_LIMIT = 23000;
     private MutableLiveData<GameEvents> liveData = new MutableLiveData<>();
     final Handler handler = new Handler();
     int minSize;

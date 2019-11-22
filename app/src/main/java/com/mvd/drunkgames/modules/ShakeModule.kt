@@ -6,6 +6,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlin.math.pow
@@ -15,7 +16,7 @@ import kotlin.math.sqrt
 class ShakeModule(application: Application) :
     GameController(application), SensorEventListener {
     private val MIN_TIME_BETWEEN_SHAKES_MILLISECS = 1000
-    private val SHAKE_THRESHOLD = 80f
+    private val SHAKE_THRESHOLD = 10f
 
     private var sensorManager: SensorManager
     private var accelerometer: Sensor
@@ -51,7 +52,7 @@ class ShakeModule(application: Application) :
                                 y.toDouble().pow(2.0) +
                                 z.toDouble().pow(2.0)
                     ) - SensorManager.GRAVITY_EARTH)
-
+                    Log.e("_acs", "acceleration Value=$acceleration")
                     if (acceleration > SHAKE_THRESHOLD) {
                         mLastShakeTime = curTime
                         liveData.postValue(GameEvents.SHAKE)

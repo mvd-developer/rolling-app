@@ -2,6 +2,7 @@ package com.mvd.drunkgames
 
 import android.app.Application
 import android.os.Handler
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,8 +48,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 // go ahead
                 shakeModule = ShakeModule(getApplication())
                 voiceDetectModule = VoiceDetectModule(getApplication())
-                shakeEventLiveData = shakeModule.subscribeUpdates()
-                shakeEventLiveData.observeForever(currentEventObserver)
+//                shakeEventLiveData = shakeModule.subscribeUpdates()
+//                shakeEventLiveData.observeForever(currentEventObserver)
 //                voiceEventLiveData = voiceDetectModule.subscribeUpdates()
 //                voiceEventLiveData.observeForever(currentEventObserver)
             } else {
@@ -66,12 +67,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             soundModule.playMusic()
             startNewGame()
         }
+        shakeEventLiveData = shakeModule.subscribeUpdates()
+        shakeEventLiveData.observeForever(currentEventObserver)
         voiceEventLiveData = voiceDetectModule.subscribeUpdates()
         voiceEventLiveData.observeForever(currentEventObserver)
-//        shakeEventLiveData = shakeModule.subscribeUpdates()
-//        shakeEventLiveData.observeForever(currentEventObserver)
-//        voiceEventLiveData = voiceDetectModule.subscribeUpdates()
-//        voiceEventLiveData.observeForever(currentEventObserver)
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -84,7 +83,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             while (isGameStarted) {
                 playOneRound()
                 TimeUnit.MILLISECONDS.sleep(timeBetweenRounds)
-                timeBetweenRounds -= 100
+//                timeBetweenRounds -= 100
+                timeBetweenRounds =4000
             }
         }.start()
     }
@@ -104,13 +104,19 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private fun validateResult() {
         if (userAction != currentRound) {
+            Log.e("_userAction", "currentRound Value = $currentRound userAction = $userAction")
             isGameStarted = false
             soundModule.stopMusic()
-            userFailed.postValue(true)
+
             voiceDetectModule.unSubscribeUpdates()
+            shakeModule.unSubscribeUpdates()
             if (voiceEventLiveData.hasObservers()) {
                 voiceEventLiveData.removeObserver(currentEventObserver)
             }
+            if (shakeEventLiveData.hasObservers()) {
+                shakeEventLiveData.removeObserver(currentEventObserver)
+            }
+            userFailed.postValue(true)
         }
     }
 
