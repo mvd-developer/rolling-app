@@ -28,13 +28,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var timeBetweenRounds = 4000L
     private var timeToWin = 2000L
     var isGameStarted = false
-    private set
+        private set
     private val currentEventObserver = Observer<GameEvents> { t ->
         if (t != null) {
             userAction = t
         }
     }
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
+
+    private var userId: String = ""
 
 
     /** Here we can show progress bar or some kind of it
@@ -111,6 +113,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         soundModule.stopMusic()
     }
 
+    fun onLoginComplete(id: String) {
+        userId = id
+    }
 
     private fun getCurrentRound(round: Int): GameEvents {
         return when (round) {

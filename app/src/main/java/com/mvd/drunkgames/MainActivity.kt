@@ -3,6 +3,7 @@ package com.mvd.drunkgames
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
+
+        val message = intent.getStringExtra(EXTRA_MESSAGE)
+        if (message != null)
+            viewModel.onLoginComplete(message)
 
         viewModel.prepareAllModules()
 

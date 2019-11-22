@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "153625047009-60tri7rhj08jv51k4u918o6cejfisncl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mvd.drunkgames",
+            "certificate_hash": "8e1f5abd1f8086326af082a18b8b217f57999c72"
+          }
+        },
+        {
           "client_id": "153625047009-jaltefelr94gaf4eqmmhidsu9o1ucgc7.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -7,6 +7,7 @@
     <string name="pass">Передай другому!</string>
     <string name="game_started">Игра началась!</string>
     <string name="start_game">Start!</string>
+    <string name="play">Play!</string>
 
     <string name="you_rounds_passed">%1$s rounds passed</string>
     <string name="would_you_like_to_have_beer">Would you like to have \n another beer and play again?</string>
