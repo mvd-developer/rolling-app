@@ -22,12 +22,20 @@ object PrefsManager {
     }
 
 
-    fun getMicrophoneSensitivity(): Float {
-        return sharedPreferences.getInt(MICROPHONE, 23000).toFloat()
+    fun getVoiceDetectionLowBoarder(): Int {
+        return sharedPreferences.getInt(MICROPHONE, 20000)
+    }
+
+    fun setVoiceDetectionLowBoarder(boarder: Int) {
+        sharedPreferences.edit().putInt(MICROPHONE, boarder)
     }
 
     fun getAccelerometrSensitivity(): Float {
-        return sharedPreferences.getInt(ACCELEROMETR, 80).toFloat()
+        return sharedPreferences.getFloat(ACCELEROMETR, 12f)
+    }
+
+    fun setAccelerometrSensitivity(sensitivity: Float) {
+        sharedPreferences.edit().putFloat(ACCELEROMETR, sensitivity)
     }
 
     fun getGameMode(): Int {
