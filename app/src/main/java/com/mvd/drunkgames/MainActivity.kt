@@ -26,8 +26,10 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     private val RECORD_REQUEST_CODE = 101
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var tvButtonText: TextView
+    private lateinit var tvCurrentRound: TextView
     private lateinit var lottieBtnStart: LottieAnimationView
     private lateinit var seekBar: SeekBar
+    private var numberOfRounds = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -35,11 +37,18 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         setContentView(R.layout.activity_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        tvButtonText = findViewById(R.id.tv_btn_text)
+        tvButtonText.setText(R.string.start_game)
+        tvCurrentRound = findViewById(R.id.tv_current_round)
+        tvCurrentRound.text = getString(R.string.current_round, numberOfRounds)
+
+        lottieBtnStart = findViewById(R.id.btn_start)
+        seekBar = findViewById(R.id.pull_btn)
+
         if (ContextCompat.checkSelfPermission(this, permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(permission.RECORD_AUDIO), RECORD_REQUEST_CODE)
         }
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
-
         viewModel.prepareAllModules()
 
         viewModel.errorMessage.observe(this, Observer<String> {
@@ -54,10 +63,13 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             }
         })
 
-        tvButtonText = findViewById(R.id.tv_btn_text)
-        tvButtonText.setText(R.string.start_game)
+        viewModel.numberOfRoundsLiveData.observe(this, Observer<Int>{
+            if (it != null) {
+                numberOfRounds = it
+                tvCurrentRound.text = getString(R.string.current_round, numberOfRounds)
+            }
+        })
 
-        lottieBtnStart = findViewById(R.id.btn_start)
 
         lottieBtnStart.setOnClickListener {
             if (viewModel.isGameStarted) {
@@ -68,7 +80,6 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             }
         }
 
-        seekBar = findViewById(R.id.pull_btn)
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             var value = 0
@@ -101,7 +112,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
 
     private fun showUserFailedDialog() {
         tvButtonText.setText(R.string.start_game)
-        DialogFailed.getInstance(viewModel.numberOfRounds)
+        DialogFailed.getInstance(numberOfRounds)
                 .show(supportFragmentManager, DialogFailed::class.java.simpleName)
     }
 

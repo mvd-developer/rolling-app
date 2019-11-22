@@ -18,7 +18,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:back_circle_color="#EDEDED"
-        app:indicator_color="@color/colorAccent"
+        app:indicator_color="@android:color/transparent"
         app:indicator_width="0.1"
         app:is_continuous="true"
         app:label=""
@@ -96,6 +96,17 @@
         app:layout_constraintEnd_toEndOf="@+id/btn_start"
         app:layout_constraintStart_toStartOf="@+id/btn_start"
         app:layout_constraintTop_toTopOf="@+id/btn_start" />
+
+    <TextView
+        android:id="@+id/tv_current_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/time_controller"
+        app:layout_constraintEnd_toEndOf="@+id/time_controller"
+        app:layout_constraintStart_toStartOf="@+id/time_controller"
+        app:layout_constraintTop_toTopOf="@+id/time_controller" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

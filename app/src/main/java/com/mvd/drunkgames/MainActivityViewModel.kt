@@ -32,7 +32,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     var isGameStarted = false
         private set
 
-    var numberOfRounds = 4
+    var numberOfRoundsLiveData = MutableLiveData<Int>()
         private set
 
     private val currentEventObserver = Observer<GameEvents> { t ->
@@ -54,10 +54,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 // go ahead
                 shakeModule = ShakeModule(getApplication())
                 voiceDetectModule = VoiceDetectModule(getApplication())
-//                shakeEventLiveData = shakeModule.subscribeUpdates()
-//                shakeEventLiveData.observeForever(currentEventObserver)
-//                voiceEventLiveData = voiceDetectModule.subscribeUpdates()
-//                voiceEventLiveData.observeForever(currentEventObserver)
             } else {
                 //show error message
                 errorMessage.postValue(it)
