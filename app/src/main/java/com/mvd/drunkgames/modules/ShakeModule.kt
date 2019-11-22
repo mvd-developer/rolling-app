@@ -8,7 +8,6 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
 import com.mvd.drunkgames.preferences.PrefsManager
 import kotlin.math.pow
 import kotlin.math.sqrt
