@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.mvd.drunkgames.base.DialogCallback
 
@@ -16,6 +17,7 @@ class DialogFailed : DialogFragment() {
 
     private lateinit var okButton: Button
     private lateinit var cancelButton: Button
+    private var numberOfRounds = 0
 
 
     companion object {
@@ -48,6 +50,13 @@ class DialogFailed : DialogFragment() {
         cancelButton.setOnClickListener {
             dialog?.dismiss()
         }
+
+        arguments?.let {
+            numberOfRounds = it.getInt(NUMBER_OF_ROUNDS)
+            val text = context?.getString(R.string.you_rounds_passed, numberOfRounds)
+            view.findViewById<TextView>(R.id.tv_rounds).text = text
+        }
+
         return view
     }
 

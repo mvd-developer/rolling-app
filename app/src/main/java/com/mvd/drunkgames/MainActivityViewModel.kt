@@ -32,7 +32,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     var isGameStarted = false
         private set
 
-    var numberOfRounds = 0
+    var numberOfRounds = 4
         private set
 
     private val currentEventObserver = Observer<GameEvents> { t ->

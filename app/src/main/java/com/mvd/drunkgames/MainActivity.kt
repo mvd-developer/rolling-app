@@ -1,6 +1,7 @@
 package com.mvd.drunkgames
 
 import android.Manifest.permission
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             if (viewModel.isGameStarted) {
                 viewModel.setUserAction(GameEvents.CLICK)
             } else {
+                tvButtonText.setText(R.string.click)
                 viewModel.startGame()
             }
         }
@@ -78,20 +80,28 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (value == seekBar?.max) {
+                if (seekBar == null) return
+
+                if (value > seekBar.max - 5) {
                     viewModel.setUserAction(GameEvents.PULL)
                 }
+                val anim = ValueAnimator.ofInt(value, 0)
+                anim.duration = 500
+                anim.addUpdateListener { animation ->
+                    val animProgress = animation.animatedValue as Int
+                    seekBar.progress = animProgress
+                }
+                anim.start()
                 value = 0
             }
         })
-
     }
 
 
-    //TODO: replace for something better
     private fun showUserFailedDialog() {
+        tvButtonText.setText(R.string.start_game)
         DialogFailed.getInstance(viewModel.numberOfRounds)
-            .show(supportFragmentManager, DialogFailed::class.java.simpleName)
+                .show(supportFragmentManager, DialogFailed::class.java.simpleName)
     }
 
 
