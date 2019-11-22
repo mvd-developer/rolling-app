@@ -79,6 +79,11 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             }
         })
 
+        viewModel.timeToWinLiveData.observe(this, Observer<Long> {
+            if (it != null) {
+                startProgressBar(it)
+            }
+        })
 
         lottieBtnStart.setOnClickListener {
             if (viewModel.isGameStarted) {
@@ -127,7 +132,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     }
 
 
-    private fun startProgress(value: Long) {
+    private fun startProgressBar(value: Long) {
         val anim = ValueAnimator.ofInt(1, progressBarCircle.max)
         anim.duration = value
         anim.interpolator = LinearInterpolator()

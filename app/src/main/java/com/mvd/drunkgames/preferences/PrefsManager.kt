@@ -31,7 +31,7 @@ object PrefsManager {
     }
 
     fun getAccelerometrSensitivity(): Float {
-        return sharedPreferences.getFloat(ACCELEROMETR, 12f)
+        return sharedPreferences.getInt(ACCELEROMETR, 12).toFloat()
     }
 
     fun setAccelerometrSensitivity(sensitivity: Float) {

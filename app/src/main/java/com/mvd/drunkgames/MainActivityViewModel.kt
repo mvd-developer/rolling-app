@@ -11,7 +11,6 @@ import com.mvd.drunkgames.base.SingleLiveEvent
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
-import com.mvd.drunkgames.preferences.PrefsManager
 import com.mvd.drunkgames.modules.VoiceDetectModule
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -33,12 +32,17 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var userAction = GameEvents.PASS
     private var timeBetweenRounds = 4000L
     private var timeToWin = 2000L
+    val timeToWinLiveData = MutableLiveData<Long>()
+
     private var hasEvent = false
     var isGameStarted = false
         private set
 
-    var numberOfRoundsLiveData = MutableLiveData<Int>()
-        private set
+    private var numberOfRounds = 0
+        private set(value) {
+            numberOfRoundsLiveData.postValue(value)
+        }
+    val numberOfRoundsLiveData = MutableLiveData<Int>()
 
     private val currentEventObserver = Observer<GameEvents> { t ->
         if (t != null && !hasEvent) {
@@ -83,7 +87,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         voiceEventLiveData.observeForever(currentEventObserver)
         userActionEventLiveData.observeForever(currentEventObserver)
 
-
+        numberOfRounds = 0
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -97,7 +101,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             while (isGameStarted) {
                 playOneRound()
                 TimeUnit.MILLISECONDS.sleep(timeBetweenRounds)
-//                timeToWin -= 100
             }
         }.start()
     }
@@ -107,10 +110,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         userAction = GameEvents.PASS
         //store current value
         currentRound = getCurrentRound(Random().nextInt(9))
-        if (currentRound == GameEvents.PASS && timeToWin > CONST_MIN_TIME_TO_WIN) timeToWin -= CONST_DECREASE_TIME_TO_WIN_FOR_ONE_ROUND
+        if (currentRound == GameEvents.PASS && timeToWin > CONST_MIN_TIME_TO_WIN) {
+            timeToWin -= CONST_DECREASE_TIME_TO_WIN_FOR_ONE_ROUND
+        }
         //tell the user what to do
         playRoundSound(currentRound)
         //give him time to think about it
+        timeToWinLiveData.postValue(timeToWin)
         hasEvent = false
         postDelayed(timeToWin) {
             validateResult()
@@ -134,6 +140,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 shakeEventLiveData.removeObserver(currentEventObserver)
             }
             userFailed.postValue(true)
+        } else {
+            numberOfRounds += 1
         }
     }
 
