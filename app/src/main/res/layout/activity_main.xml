@@ -51,6 +51,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
+        android:max="100"
+        android:progress="5"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:progressDrawable="@drawable/seekbar_style"
@@ -87,13 +89,13 @@
         android:text="@string/start_game"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btn_start"
         app:layout_constraintEnd_toEndOf="@+id/btn_start"
         app:layout_constraintStart_toStartOf="@+id/btn_start"
-        app:layout_constraintTop_toTopOf="@+id/btn_start"
-        android:textColor="@android:color/white"/>
+        app:layout_constraintTop_toTopOf="@+id/btn_start" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

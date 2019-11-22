@@ -62,10 +62,24 @@ class MainActivity : AppCompatActivity(), DialogCallback {
 
         seekBar = findViewById(R.id.pull_btn)
 
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            var value = 0
 
-//        findViewById<Button>(R.id.pull_btn).setOnClickListener {
-//            viewModel.setUserAction(GameEvents.PULL)
-//        }
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                value = progress
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (value == seekBar?.max) {
+                    viewModel.setUserAction(GameEvents.PULL)
+                }
+                value = 0
+            }
+        })
+
 
 //        findViewById<Button>(R.id.scream_btn).setOnClickListener {
 //            viewModel.setUserAction(GameEvents.SCREAM)
@@ -83,12 +97,12 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     //TODO: replace for something better
     private fun showUserFailedDialog() {
         AlertDialog.Builder(this)
-            .setTitle(R.string.app_name)
-            .setMessage("Your failed the mission!")
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
-                dialog.dismiss()
-            }
-            .show()
+                .setTitle(R.string.app_name)
+                .setMessage("Your failed the mission!")
+                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 
 
