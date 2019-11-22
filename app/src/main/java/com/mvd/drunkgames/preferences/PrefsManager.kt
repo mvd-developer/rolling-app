@@ -26,7 +26,7 @@ object PrefsManager {
     }
 
     fun getAccelerometrSensitivity(): Float {
-        return sharedPreferences.getInt(ACCELEROMETR, 80).toFloat()
+        return sharedPreferences.getInt(ACCELEROMETR, 10).toFloat()
     }
 
     fun getGameMode(): Int {

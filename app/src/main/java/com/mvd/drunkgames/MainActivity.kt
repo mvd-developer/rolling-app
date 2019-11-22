@@ -1,5 +1,7 @@
 package com.mvd.drunkgames
 
+import android.Manifest.permission
+import android.content.pm.PackageManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +11,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.airbnb.lottie.LottieAnimationView
@@ -20,7 +24,7 @@ import com.mvd.drunkgames.preferences.SettingsActivity
 
 class MainActivity : AppCompatActivity(), DialogCallback {
 
-
+    private val RECORD_REQUEST_CODE = 101
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var tvButtonText: TextView
     private lateinit var lottieBtnStart: LottieAnimationView
@@ -31,6 +35,9 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         setContentView(R.layout.activity_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        if (ContextCompat.checkSelfPermission(this, permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(permission.RECORD_AUDIO), RECORD_REQUEST_CODE)
+        }
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
 
         viewModel.prepareAllModules()

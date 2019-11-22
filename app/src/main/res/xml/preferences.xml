@@ -11,8 +11,8 @@
     <SeekBarPreference
         android:key="accelerometr"
         android:title="@string/acc_sensitivity"
-        android:max="16"
-        android:defaultValue="8" />
+        android:max="100"
+        android:defaultValue="50" />
 
     <DropDownPreference
         android:key="game_mode"
