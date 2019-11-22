@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class VoiceDetectModule extends GameController {
 
-    private int MIN_SCREAM_LIMIT = 27000;
+    private int MIN_SCREAM_LIMIT = 7000;
     private MutableLiveData<GameEvents> liveData = new MutableLiveData<>();
     final Handler handler = new Handler();
     int minSize;
@@ -45,7 +45,7 @@ public class VoiceDetectModule extends GameController {
 
     @Override
     public LiveData<GameEvents> subscribeUpdates() {
-        Log.e("_cryy", "subscribeUpdates " + this.getClass().toString());
+        startDetection();
         return liveData;
     }
 
@@ -89,7 +89,7 @@ public class VoiceDetectModule extends GameController {
                             Log.e("_cry", "Blow Value HIGH=" + blow_value);
                             maxVolumeLiveData.postValue(String.valueOf(blow_value));
                             liveData.postValue(GameEvents.SCREAM);
-                            break;
+                          //  break;
                         }
                     }
                 }

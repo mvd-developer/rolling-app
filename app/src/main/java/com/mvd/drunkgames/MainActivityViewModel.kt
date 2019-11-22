@@ -10,6 +10,7 @@ import com.mvd.drunkgames.base.SingleLiveEvent
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
+import com.mvd.drunkgames.modules.VoiceDetectModule
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -18,6 +19,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private lateinit var soundModule: SoundModule
     private lateinit var shakeModule: ShakeModule
+    private lateinit var voiceDetectModule: VoiceDetectModule
     val errorMessage = MutableLiveData<String>()
     val userFailed = SingleLiveEvent<Boolean>()
     private val delayHandler = Handler()
@@ -32,6 +34,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
+    private lateinit var voiceEventLiveData: LiveData<GameEvents>
 
 
     /** Here we can show progress bar or some kind of it
@@ -43,6 +46,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 //sound module is initialized
                 // go ahead
                 shakeModule = ShakeModule(getApplication())
+                voiceDetectModule = VoiceDetectModule(getApplication())
+                shakeEventLiveData = shakeModule.subscribeUpdates()
+                shakeEventLiveData.observeForever(currentEventObserver)
+//                voiceEventLiveData = voiceDetectModule.subscribeUpdates()
+//                voiceEventLiveData.observeForever(currentEventObserver)
             } else {
                 //show error message
                 errorMessage.postValue(it)
@@ -58,8 +66,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             soundModule.playMusic()
             startNewGame()
         }
-        shakeEventLiveData = shakeModule.subscribeUpdates()
-        shakeEventLiveData.observeForever(currentEventObserver)
+        voiceEventLiveData = voiceDetectModule.subscribeUpdates()
+        voiceEventLiveData.observeForever(currentEventObserver)
+//        shakeEventLiveData = shakeModule.subscribeUpdates()
+//        shakeEventLiveData.observeForever(currentEventObserver)
+//        voiceEventLiveData = voiceDetectModule.subscribeUpdates()
+//        voiceEventLiveData.observeForever(currentEventObserver)
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -95,6 +107,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             isGameStarted = false
             soundModule.stopMusic()
             userFailed.postValue(true)
+            voiceDetectModule.unSubscribeUpdates()
+            if (voiceEventLiveData.hasObservers()) {
+                voiceEventLiveData.removeObserver(currentEventObserver)
+            }
         }
     }
 
@@ -135,11 +151,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     override fun onCleared() {
         shakeModule.unSubscribeUpdates()
+        voiceDetectModule.unSubscribeUpdates()
         super.onCleared()
         soundModule.onDestroy()
 
         if (shakeEventLiveData.hasObservers()) {
             shakeEventLiveData.removeObserver(currentEventObserver)
+        }
+        if (voiceEventLiveData.hasObservers()) {
+            voiceEventLiveData.removeObserver(currentEventObserver)
         }
     }
 }
