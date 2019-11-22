@@ -17,6 +17,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 private const val CONST_TIME_BETWEEN_ROUNDS = 4000L
+private const val CONST_TIME_TO_WIN = 2000L
+private const val CONST_MIN_TIME_TO_WIN = 1000L
+private const val CONST_DECREASE_TIME_TO_WIN_FOR_ONE_ROUND = 100L
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -30,15 +33,19 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var userAction = GameEvents.PASS
     private var timeBetweenRounds = 4000L
     private var timeToWin = 2000L
+    private var hasEvent = false
     var isGameStarted = false
-    private set
+        private set
     private val currentEventObserver = Observer<GameEvents> { t ->
-        if (t != null) {
+        if (t != null && !hasEvent) {
             userAction = t
+            Log.e("_curEventObs", "currentRound Value = $currentRound userAction = $userAction")
+            hasEvent = true
         }
     }
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
     private lateinit var voiceEventLiveData: LiveData<GameEvents>
+    private var userActionEventLiveData = MutableLiveData<GameEvents>()
 
 
     /** Here we can show progress bar or some kind of it
@@ -74,6 +81,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         shakeEventLiveData.observeForever(currentEventObserver)
         voiceEventLiveData = voiceDetectModule.subscribeUpdates()
         voiceEventLiveData.observeForever(currentEventObserver)
+        userActionEventLiveData.observeForever(currentEventObserver)
+
+
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -82,32 +92,36 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun startNewGame() {
-        timeBetweenRounds = CONST_TIME_BETWEEN_ROUNDS
+        timeToWin = CONST_TIME_TO_WIN
         Thread {
             while (isGameStarted) {
                 playOneRound()
                 TimeUnit.MILLISECONDS.sleep(timeBetweenRounds)
-                timeBetweenRounds -= 100
+//                timeToWin -= 100
             }
         }.start()
     }
 
     private fun playOneRound() {
+
         userAction = GameEvents.PASS
         //store current value
-        currentRound = getCurrentRound(Random().nextInt(5))
+        currentRound = getCurrentRound(Random().nextInt(9))
+        if (currentRound == GameEvents.PASS && timeToWin > CONST_MIN_TIME_TO_WIN) timeToWin -= CONST_DECREASE_TIME_TO_WIN_FOR_ONE_ROUND
         //tell the user what to do
         playRoundSound(currentRound)
         //give him time to think about it
+        hasEvent = false
         postDelayed(timeToWin) {
             validateResult()
+
         }
     }
 
 
     private fun validateResult() {
+        Log.e("_validateResult", "currentRound Value = $currentRound userAction = $userAction")
         if (userAction != currentRound) {
-            Log.e("_userAction", "currentRound Value = $currentRound userAction = $userAction")
             isGameStarted = false
             soundModule.stopMusic()
 
@@ -125,7 +139,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     fun setUserAction(userAction: GameEvents) {
-        this.userAction = userAction
+        userActionEventLiveData.postValue(userAction)
     }
 
     fun finishGame() {
@@ -135,10 +149,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private fun getCurrentRound(round: Int): GameEvents {
         return when (round) {
-            0 -> GameEvents.CLICK
-            1 -> GameEvents.PULL
-            2 -> GameEvents.SCREAM
-            3 -> GameEvents.SHAKE
+            0, 1 -> GameEvents.CLICK
+            2, 3 -> GameEvents.PULL
+            4, 5 -> GameEvents.SCREAM
+            6, 7 -> GameEvents.SHAKE
             else -> GameEvents.PASS
         }
     }
@@ -169,6 +183,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
         if (voiceEventLiveData.hasObservers()) {
             voiceEventLiveData.removeObserver(currentEventObserver)
+        }
+        if (userActionEventLiveData.hasObservers()) {
+            userActionEventLiveData.removeObserver(currentEventObserver)
         }
     }
 }

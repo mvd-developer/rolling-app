@@ -5,14 +5,14 @@
     <SeekBarPreference
         android:key="microphone"
         android:title="@string/mic_sensitivity"
-        android:max="10"
-        android:defaultValue="5" />
+        android:max="50000"
+        android:defaultValue="22000" />
 
     <SeekBarPreference
         android:key="accelerometr"
         android:title="@string/acc_sensitivity"
-        android:max="100"
-        android:defaultValue="50" />
+        android:max="25"
+        android:defaultValue="10" />
 
     <DropDownPreference
         android:key="game_mode"
