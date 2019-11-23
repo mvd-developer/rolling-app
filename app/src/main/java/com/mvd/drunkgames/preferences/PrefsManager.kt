@@ -12,6 +12,7 @@ object PrefsManager {
     private val MICROPHONE = "microphone"
     private val ACCELEROMETR = "accelerometr"
     private val MODE = "game_mode"
+    private val USER = "current_user"
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var context: Context
@@ -49,11 +50,11 @@ object PrefsManager {
     }
 
     fun getUserId(): String? {
-        return sharedPreferences.getString(MODE, "")
+        return sharedPreferences.getString(USER, "")
     }
 
     fun setUserId(userId: String) {
-        sharedPreferences.edit().putString(MODE, userId).apply()
+        sharedPreferences.edit().putString(USER, userId).apply()
     }
 
 }
