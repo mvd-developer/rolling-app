@@ -16,7 +16,7 @@
 
     <string name="mic_sensitivity">Чувствительность микрофона</string>
     <string name="acc_sensitivity">Чувствительность акселерометра</string>
-    <string name="game_mode">Тип игры</string>
+    <string name="game_mode">Тип игры:</string>
     <string name="death_mode">Death mode</string>
     <string name="count_down">Count down</string>
     <string name="threshold">Порог:</string>

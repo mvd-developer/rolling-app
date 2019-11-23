@@ -27,22 +27,24 @@ object PrefsManager {
     }
 
     fun setVoiceDetectionLowBoarder(boarder: Int) {
-        sharedPreferences.edit().putInt(MICROPHONE, boarder)
+        sharedPreferences.edit().putInt(MICROPHONE, boarder).apply()
     }
 
     fun getAccelerometrSensitivity(): Float {
-        return sharedPreferences.getFloat(ACCELEROMETR, 12f)
+        return sharedPreferences.getInt(ACCELEROMETR, 12).toFloat()
     }
 
-    fun setAccelerometrSensitivity(sensitivity: Float) {
-        sharedPreferences.edit().putFloat(ACCELEROMETR, sensitivity)
+    fun setAccelerometrSensitivity(sensitivity: Int) {
+        sharedPreferences.edit().putInt(ACCELEROMETR, sensitivity).apply()
     }
 
+    //0 - deathMode, 1 - countdownMode
     fun getGameMode(): Int {
-        val mode = sharedPreferences.getString(MODE, "0")
-        if (mode != null)
-            return mode.toInt()
-        return 0
+        return sharedPreferences.getInt(MODE, 0)
+    }
+    //0 - deathMode, 1 - countdownMode
+    fun setGameMode(mode: Int) {
+        sharedPreferences.edit().putInt(MODE, mode).apply()
     }
 
 }
