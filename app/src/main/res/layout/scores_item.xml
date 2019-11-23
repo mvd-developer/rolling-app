@@ -10,6 +10,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@id/rounds_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -19,6 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/date_tv"
             app:layout_constraintTop_toTopOf="parent" />

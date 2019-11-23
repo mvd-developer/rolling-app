@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import com.mvd.drunkgames.R;
 import com.mvd.drunkgames.scores.ScoresFragment;
 
+import java.util.Objects;
+
 public class SettingActivity extends AppCompatActivity {
 
     private SeekBar seekBarMicrophone;
@@ -97,7 +99,8 @@ public class SettingActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.containerStatistics, ScoresFragment
-                                    .Companion.getInstance(PrefsManager.INSTANCE.getUserId()));
+                                    .Companion.getInstance(Objects.requireNonNull(PrefsManager.INSTANCE.getUserId())))
+                            .commit();
                 }
             });
         } else {
