@@ -66,12 +66,15 @@
             android:id="@+id/tv_rounds"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/you_rounds_passed"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_title"
-            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintStart_toStartOf="@+id/bg"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <TextView
@@ -81,7 +84,8 @@
             android:layout_marginTop="8dp"
             android:text="@string/would_you_like_to_have_beer"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@+id/tv_title"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_rounds"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_rounds"
             app:layout_constraintTop_toBottomOf="@+id/tv_rounds" />

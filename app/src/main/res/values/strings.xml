@@ -1,19 +1,19 @@
 <resources>
-    <string name="app_name">Drunk Games</string>
+    <string name="app_name">Party Shaker</string>
     <string name="click">Нажми</string>
     <string name="pull">Тяни</string>
     <string name="scream">Кричи</string>
     <string name="shake">Тряси</string>
     <string name="pass">Передай другому!</string>
     <string name="game_started">Игра началась!</string>
-    <string name="start_game">Start!</string>
-    <string name="play">Play!</string>
+    <string name="start_game">Старт!</string>
+    <string name="play">Играть!</string>
 
-    <string name="you_rounds_passed">%1$d rounds passed</string>
-    <string name="would_you_like_to_have_beer">Would you like to have \n another beer and play again?</string>
-    <string name="you_win">You win!</string>
-    <string name="you_failed">You failed!</string>
-    <string name="settings">Settings</string>
+    <string name="you_rounds_passed">%1$d уровней завершено</string>
+    <string name="would_you_like_to_have_beer">Не везет? Сыгранём ещё разок?</string>
+    <string name="you_win">Победа!</string>
+    <string name="you_failed">Лузер!</string>
+    <string name="settings">Настройки</string>
 
     <string name="mic_sensitivity">Чувствительность микрофона</string>
     <string name="acc_sensitivity">Чувствительность акселерометра</string>
@@ -23,6 +23,6 @@
     <string name="current_round">Round %1$d</string>
 
     <string name="default_client_id">153625047009-jaltefelr94gaf4eqmmhidsu9o1ucgc7.apps.googleusercontent.com</string>
-    <string name="sign_in">Sign In</string>
-    <string name="or_create_an_account_for_your_team">or create an account for your team!</string>
+    <string name="sign_in">Войти в приложение</string>
+    <string name="or_create_an_account_for_your_team">или создать аккаунт с Google</string>
 </resources>
