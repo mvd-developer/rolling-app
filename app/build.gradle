@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -69,6 +71,9 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
 
-    //for custom seek bar
-    implementation 'com.sdsmdg.harjot:croller:1.0.7'
+
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:21.3.0'
+
 }

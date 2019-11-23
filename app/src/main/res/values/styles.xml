@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="AppTheme.Launcher">
+        <item name="colorPrimaryDark">?attr/colorPrimary</item>
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
 </resources>
