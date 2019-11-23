@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.mvd.drunkgames.MainActivity
 import com.mvd.drunkgames.R
+import com.mvd.drunkgames.preferences.PrefsManager
 
 
 class LoginActivity : AppCompatActivity() {
@@ -98,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
                                 //login complete
                                 if (user != null) {
                                     startGame(user.uid)
+                                    PrefsManager.setUserId(user.uid);
                                 }
 
                             } else {

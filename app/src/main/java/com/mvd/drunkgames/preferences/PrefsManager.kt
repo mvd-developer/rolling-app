@@ -42,9 +42,18 @@ object PrefsManager {
     fun getGameMode(): Int {
         return sharedPreferences.getInt(MODE, 0)
     }
+
     //0 - deathMode, 1 - countdownMode
     fun setGameMode(mode: Int) {
         sharedPreferences.edit().putInt(MODE, mode).apply()
+    }
+
+    fun getUserId(): String? {
+        return sharedPreferences.getString(MODE, "")
+    }
+
+    fun setUserId(userId: String) {
+        sharedPreferences.edit().putString(MODE, userId).apply()
     }
 
 }

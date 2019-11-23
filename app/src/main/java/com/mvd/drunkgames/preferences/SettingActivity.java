@@ -1,6 +1,8 @@
 package com.mvd.drunkgames.preferences;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -8,8 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.mvd.drunkgames.R;
+import com.mvd.drunkgames.scores.ScoresFragment;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -21,6 +25,7 @@ public class SettingActivity extends AppCompatActivity {
     private RadioGroup modeRadioGroup;
     private RadioButton deathRadioButton;
     private RadioButton countDownRadioButton;
+    private Button buttonStatistics;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,9 +39,11 @@ public class SettingActivity extends AppCompatActivity {
         modeRadioGroup = findViewById(R.id.modeRadioGroup);
         deathRadioButton = findViewById(R.id.deathRadioButton);
         countDownRadioButton = findViewById(R.id.countDownRadioButton);
+        buttonStatistics = findViewById(R.id.buttonStatistics);
 
         seekBarMicrophone.setProgress(PrefsManager.INSTANCE.getVoiceDetectionLowBoarder());
         microphoneBoarderValue.setText(String.valueOf(seekBarMicrophone.getProgress()));
+        String userID = PrefsManager.INSTANCE.getUserId();
         seekBarMicrophone.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -83,6 +90,20 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (!userID.equals("")) {
+            buttonStatistics.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.containerStatistics, ScoresFragment
+                                    .Companion.getInstance(PrefsManager.INSTANCE.getUserId()));
+                }
+            });
+        } else {
+            buttonStatistics.setOnClickListener(null);
+            buttonStatistics.setEnabled(false);
+        }
     }
 
     private void checkGameMode() {
