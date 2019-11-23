@@ -87,7 +87,7 @@ public class VoiceDetectModule extends GameController {
                 if (ar != null) {
                     ar.read(buffer, 0, minSize);
                     for (short s : buffer) {
-                        Log.e("_cr", "Blow Value=" + s);
+                   //     Log.e("_cr", "Blow Value=" + s);
                         if (Math.abs(s) > MIN_SCREAM_LIMIT)   //DETECT VOLUME (IF I BLOW IN THE MIC)
                         {
                             handler.removeCallbacks(runnable);

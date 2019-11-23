@@ -36,8 +36,16 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         setContentView(R.layout.activity_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (ContextCompat.checkSelfPermission(this, permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(permission.RECORD_AUDIO), RECORD_REQUEST_CODE)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(permission.RECORD_AUDIO),
+                RECORD_REQUEST_CODE
+            )
         }
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
 
@@ -105,12 +113,12 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     //TODO: replace for something better
     private fun showUserFailedDialog() {
         AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage("Your failed the mission!")
-                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage("Your failed the mission!")
+            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 

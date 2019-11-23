@@ -38,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="#F5A7A7"
             android:gravity="center"
             android:text="12345"
             android:textColor="#000000"
@@ -69,6 +68,7 @@
             android:gravity="center"
             android:textColor="#000000"
             android:textSize="18sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/microphoneBoarderValue"
             app:layout_constraintTop_toTopOf="@+id/microphoneBoarderValueTv" />
@@ -117,7 +117,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="#F5A7A7"
             android:gravity="center"
             android:text="12345"
             android:textColor="#000000"
@@ -159,7 +158,6 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:gravity="center"
-                android:layout_weight="1"
                 android:text="@string/death_mode"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="328dp" />
@@ -172,12 +170,11 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:singleLine="true"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="@string/count_down"
                 tools:layout_editor_absoluteX="200dp"
                 tools:layout_editor_absoluteY="349dp" />
-
-
     </RadioGroup>
 
 

@@ -58,10 +58,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 // go ahead
                 shakeModule = ShakeModule(getApplication())
                 voiceDetectModule = VoiceDetectModule(getApplication())
-//                shakeEventLiveData = shakeModule.subscribeUpdates()
-//                shakeEventLiveData.observeForever(currentEventObserver)
-//                voiceEventLiveData = voiceDetectModule.subscribeUpdates()
-//                voiceEventLiveData.observeForever(currentEventObserver)
             } else {
                 //show error message
                 errorMessage.postValue(it)
@@ -92,6 +88,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun startNewGame() {
+        Log.e("_hna", "startNewGame ")
         timeToWin = CONST_TIME_TO_WIN
         Thread {
             while (isGameStarted) {
