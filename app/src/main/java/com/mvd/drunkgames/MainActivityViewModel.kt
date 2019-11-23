@@ -121,7 +121,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
         userAction = GameEvents.PASS
         //store current value
-        currentRound = getCurrentRound(Random().nextInt(9))
+        currentRound = getCurrentRound(Random().nextInt(15))
         if (currentRound == GameEvents.PASS && timeToWin > CONST_MIN_TIME_TO_WIN) {
             timeToWin -= CONST_DECREASE_TIME_TO_WIN_FOR_ONE_ROUND
         }
@@ -178,10 +178,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private fun getCurrentRound(round: Int): GameEvents {
         return when (round) {
-            0, 1 -> GameEvents.CLICK
-            2, 3 -> GameEvents.PULL
-            4, 5 -> GameEvents.SCREAM
-            6, 7 -> GameEvents.SHAKE
+            0, 1, 8 -> GameEvents.CLICK
+            2, 3, 9 -> GameEvents.PULL
+            4, 5, 10 -> GameEvents.SCREAM
+            6, 7, 11 -> GameEvents.SHAKE
             else -> GameEvents.PASS
         }
     }
@@ -238,13 +238,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun updateCurrentUser(round: Int) {
+        if (currentUser == null) return
+
         val modifyGameSessions = mutableListOf<GameSession>()
         val gameSession = GameSession()
         gameSession.date = System.currentTimeMillis()
         gameSession.rounds = round
-        currentUser!!.gameSessions?.let { modifyGameSessions.addAll(it) }
+        currentUser?.gameSessions?.let { modifyGameSessions.addAll(it) }
         modifyGameSessions.add(gameSession)
-        currentUser!!.gameSessions = modifyGameSessions
+        currentUser?.gameSessions = modifyGameSessions
 
         db.collection("users")
             .document(currentUser!!.id)
