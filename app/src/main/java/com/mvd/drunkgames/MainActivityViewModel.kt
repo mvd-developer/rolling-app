@@ -153,7 +153,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
             delayHandler.removeCallbacksAndMessages(null)
             userFailed.postValue(true)
-
+            if (numberOfRounds > 0)
+                updateCurrentUser(numberOfRounds)
         } else {
             numberOfRounds += 1
             numberOfRoundsLiveData.postValue(numberOfRounds)
@@ -220,19 +221,19 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private fun checkForEntityInDB(id: String) {
         val docRef = db.collection("users").document(id)
         docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        currentUser = document.toObject(User::class.java)
-                    } else {
-                        val newUser = User()
-                        newUser.id = userId
-                        newUser.gameSessions = listOf(GameSession())
-                        docRef.set(newUser)
-                    }
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    currentUser = document.toObject(User::class.java)
+                } else {
+                    val newUser = User()
+                    newUser.id = userId
+                    newUser.gameSessions = listOf(GameSession())
+                    docRef.set(newUser)
                 }
-                .addOnFailureListener { exception ->
-                    Log.d("TAG", "get failed with ", exception)
-                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
     }
 
 
