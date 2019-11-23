@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     private lateinit var progressBarCircle: ProgressBar
     private lateinit var chronometer: Chronometer
 
+    private var isAvailableForNewGame = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -97,9 +99,12 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             if (viewModel.isGameStarted) {
                 viewModel.setUserAction(GameEvents.CLICK)
             } else {
-                startTimer()
-                tvButtonText.setText(R.string.click)
-                viewModel.startGame()
+                if (isAvailableForNewGame) {
+                    startTimer()
+                    tvButtonText.setText(R.string.click)
+                    isAvailableForNewGame = false
+                    viewModel.startGame()
+                }
             }
         }
 
@@ -163,12 +168,15 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     override fun playAgain() {
         startTimer()
         tvButtonText.setText(R.string.click)
-        viewModel.startGame()
+        isAvailableForNewGame = true
+        if (isAvailableForNewGame) {
+            isAvailableForNewGame = false
+            viewModel.startGame()
+        }
     }
 
     override fun cancel() {
-        //do nothing
-        //sign out maybe?
+        isAvailableForNewGame = true
     }
 
 

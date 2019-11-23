@@ -57,6 +57,7 @@ class DialogFailed : DialogFragment() {
 
         cancelButton.setOnClickListener {
             this.dismiss()
+            (activity as DialogCallback).cancel()
         }
 
         arguments?.let {

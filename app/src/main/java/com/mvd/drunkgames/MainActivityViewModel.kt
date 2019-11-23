@@ -16,7 +16,7 @@ import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
 import com.mvd.drunkgames.modules.VoiceDetectModule
 import java.util.*
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 
 
 private const val CONST_TIME_BETWEEN_ROUNDS = 4000L
@@ -48,6 +48,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     val numberOfRoundsLiveData = MutableLiveData<Int>()
 
+    var isAvailableForNewGame = AtomicBoolean(true)
+        private set
+
     private val currentEventObserver = Observer<GameEvents> { t ->
         if (t != null && !hasEvent) {
             userAction = t
@@ -57,7 +60,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
     private var shakeEventLiveData: LiveData<GameEvents>? = null
     private var voiceEventLiveData: LiveData<GameEvents>? = null
-    private val userActionEventLiveData = MutableLiveData<GameEvents>()
+    private val userActionEventLiveData = SingleLiveEvent<GameEvents>()
 
     private var userId: String = ""
     private var currentUser: User? = null
@@ -84,10 +87,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     fun startGame() {
+        delayHandler.removeCallbacksAndMessages(null)
+
+        isAvailableForNewGame.set(false)
         isGameStarted = true
         soundModule.playText(R.string.game_started)
         postDelayed(1500) {
             soundModule.playMusic()
+            timeToWin = CONST_TIME_TO_WIN
             startNewGame()
         }
         shakeEventLiveData = shakeModule.subscribeUpdates()
@@ -103,15 +110,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         delayHandler.postDelayed(callback, delayMillis)
     }
 
-
     private fun startNewGame() {
-        timeToWin = CONST_TIME_TO_WIN
-        Thread {
-            while (isGameStarted) {
-                playOneRound()
-                TimeUnit.MILLISECONDS.sleep(timeBetweenRounds)
+        postDelayed(timeBetweenRounds) {
+            playOneRound()
+            if (isGameStarted) {
+                startNewGame()
             }
-        }.start()
+        }
     }
 
     private fun playOneRound() {
@@ -148,7 +153,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             if (shakeEventLiveData!!.hasObservers()) {
                 shakeEventLiveData!!.removeObserver(currentEventObserver)
             }
+            delayHandler.removeCallbacksAndMessages(null)
             userFailed.postValue(true)
+
         } else {
             numberOfRounds += 1
         }

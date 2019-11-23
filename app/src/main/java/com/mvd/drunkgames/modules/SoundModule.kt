@@ -46,7 +46,7 @@ class SoundModule(private val application: Application, callback: (errorMessage:
 
 
     fun stopMusic() {
-        mp.stop()
+        mp?.stop()
         mp = MediaPlayer.create(application, R.raw.audio)
     }
 
