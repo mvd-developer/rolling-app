@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/microphoneBoarderName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/setting_left_margin"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/voice_detection_level"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <SeekBar
+            android:id="@+id/seekBarMicrophone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/setting_left_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:max="40000"
+            android:progress="20000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/microphoneBoarderName" />
+
+    <TextView
+            android:id="@+id/microphoneBoarderValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="#F5A7A7"
+            android:gravity="center"
+            android:text="12345"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/microphoneBoarderValueTv"
+            app:layout_constraintStart_toEndOf="@+id/microphoneBoarderValueTv"
+            app:layout_constraintTop_toTopOf="@+id/microphoneBoarderValueTv" />
+
+    <TextView
+            android:id="@+id/microphoneBoarderValueTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/threshold"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarMicrophone" />
+
+    <TextView
+            android:id="@+id/microphoneBoarderCheckTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/microphoneBoarderValue"
+            app:layout_constraintTop_toTopOf="@+id/microphoneBoarderValueTv" />
+
+    <TextView
+            android:id="@+id/accelerometrBoarderName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/setting_left_margin"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/accelerometr_detection_level"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/microphoneBoarderValueTv"/>
+
+    <SeekBar
+            android:id="@+id/seekBarAccelerometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/setting_left_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:max="25"
+            android:progress="12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accelerometrBoarderName" />
+
+    <TextView
+            android:id="@+id/accelerometerBoarderValueTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/setting_left_margin"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/threshold"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarAccelerometer" />
+
+    <TextView
+            android:id="@+id/accelerometerBoarderValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="#F5A7A7"
+            android:gravity="center"
+            android:text="12345"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/accelerometerBoarderValueTv"
+            app:layout_constraintStart_toEndOf="@+id/accelerometerBoarderValueTv"
+            app:layout_constraintTop_toTopOf="@+id/accelerometerBoarderValueTv" />
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/setting_left_margin"
+            android:layout_marginTop="32dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accelerometerBoarderValueTv" />
+
+    <RadioGroup
+            android:id="@+id/modeRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:orientation="horizontal">
+
+    <RadioButton
+            android:id="@+id/deathRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Режим До ошибки"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:checked="true"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="328dp" />
+
+    <RadioButton
+            android:id="@+id/countDownRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Режим обратного отсчета"
+            android:ellipsize="end"
+            android:layout_marginStart="10dp"
+            android:singleLine="true"
+            tools:layout_editor_absoluteX="200dp"
+            tools:layout_editor_absoluteY="349dp" />
+
+
+    </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

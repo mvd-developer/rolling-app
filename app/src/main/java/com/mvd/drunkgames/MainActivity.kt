@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.mvd.drunkgames.base.DialogCallback
 import com.mvd.drunkgames.base.showErrorMessage
 import com.mvd.drunkgames.modules.GameEvents
+import com.mvd.drunkgames.preferences.SettingActivity
 import com.mvd.drunkgames.preferences.SettingsActivity
 
 
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                this.startActivity(Intent(this, SettingsActivity::class.java))
+                this.startActivity(Intent(this, SettingActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -3,13 +3,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SeekBarPreference
-            android:defaultValue="22000"
+            android:defaultValue="20000"
             android:key="microphone"
-            android:max="50000"
+            android:max="40000"
             android:title="@string/mic_sensitivity" />
 
     <SeekBarPreference
-            android:defaultValue="10"
+            android:defaultValue="12"
             android:key="accelerometr"
             android:max="25"
             android:title="@string/acc_sensitivity" />
