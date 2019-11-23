@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mvd.drunkgames">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:name=".application.GameApplication"
@@ -13,6 +15,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".preferences.SettingsActivity" />
+        <activity
+            android:name=".login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
@@ -21,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".preferences.SettingsActivity" />
     </application>
 
 </manifest>

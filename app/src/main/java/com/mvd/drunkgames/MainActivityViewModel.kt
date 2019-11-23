@@ -7,13 +7,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mvd.drunkgames.base.SingleLiveEvent
+import com.mvd.drunkgames.entity.GameSession
+import com.mvd.drunkgames.entity.User
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
 import com.mvd.drunkgames.modules.VoiceDetectModule
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 private const val CONST_TIME_BETWEEN_ROUNDS = 4000L
 private const val CONST_TIME_TO_WIN = 2000L
@@ -54,6 +58,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
     private lateinit var voiceEventLiveData: LiveData<GameEvents>
     private var userActionEventLiveData = MutableLiveData<GameEvents>()
+
+    private var userId: String = ""
+    private var currentUser: User? = null
+
+    var db = FirebaseFirestore.getInstance()
 
 
     /** Here we can show progress bar or some kind of it
@@ -154,6 +163,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         soundModule.stopMusic()
     }
 
+    fun onLoginComplete(id: String) {
+        userId = id
+        if (id.isNotEmpty())
+            checkForEntityInDB(id)
+    }
 
     private fun getCurrentRound(round: Int): GameEvents {
         return when (round) {
@@ -195,5 +209,29 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         if (userActionEventLiveData.hasObservers()) {
             userActionEventLiveData.removeObserver(currentEventObserver)
         }
+    }
+
+    private fun checkForEntityInDB(id: String) {
+        val docRef = db.collection("users").document(id)
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    currentUser = document.toObject(User::class.java)
+                } else {
+                    val newUser = User()
+                    newUser.id = userId
+                    newUser.gameSessions = listOf(GameSession())
+                    docRef.set(newUser)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+    }
+
+
+
+    private fun updateCurrentUser(round: Int) {
+
     }
 }

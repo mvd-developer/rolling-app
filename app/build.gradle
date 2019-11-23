@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -68,5 +70,10 @@ dependencies {
     def lottieVersion = "3.2.2"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+
+
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:21.3.0'
 
 }

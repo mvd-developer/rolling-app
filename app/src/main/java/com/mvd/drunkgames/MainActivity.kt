@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.os.SystemClock
 import android.view.Menu
 import android.view.MenuItem
@@ -58,6 +59,11 @@ class MainActivity : AppCompatActivity(), DialogCallback {
             ActivityCompat.requestPermissions(this, arrayOf(permission.RECORD_AUDIO), RECORD_REQUEST_CODE)
         }
         viewModel = ViewModelProviders.of(this)[MainActivityViewModel::class.java]
+
+        val message = intent.getStringExtra(EXTRA_MESSAGE)
+        if (message != null)
+            viewModel.onLoginComplete(message)
+
         viewModel.prepareAllModules()
 
         viewModel.errorMessage.observe(this, Observer<String> {

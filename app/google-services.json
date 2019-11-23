@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "153625047009",
+    "firebase_url": "https://partyshaker-38121.firebaseio.com",
+    "project_id": "partyshaker-38121",
+    "storage_bucket": "partyshaker-38121.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153625047009:android:14af7ecb8fbbce63ec2ca0",
+        "android_client_info": {
+          "package_name": "com.mvd.drunkgames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153625047009-60tri7rhj08jv51k4u918o6cejfisncl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mvd.drunkgames",
+            "certificate_hash": "8e1f5abd1f8086326af082a18b8b217f57999c72"
+          }
+        },
+        {
+          "client_id": "153625047009-jaltefelr94gaf4eqmmhidsu9o1ucgc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR6M0d-ol0JLolHGboFXpUCCDHZ2Lm1p0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153625047009-jaltefelr94gaf4eqmmhidsu9o1ucgc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
