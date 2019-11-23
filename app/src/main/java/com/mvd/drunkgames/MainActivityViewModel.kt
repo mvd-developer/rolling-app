@@ -2,17 +2,22 @@ package com.mvd.drunkgames
 
 import android.app.Application
 import android.os.Handler
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mvd.drunkgames.base.SingleLiveEvent
+import com.mvd.drunkgames.entity.GameSession
+import com.mvd.drunkgames.entity.User
 import com.mvd.drunkgames.modules.GameEvents
 import com.mvd.drunkgames.modules.ShakeModule
 import com.mvd.drunkgames.modules.SoundModule
-import com.mvd.drunkgames.preferences.PrefsManager
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.HashMap
+
 
 private const val CONST_TIME_BETWEEN_ROUNDS = 4000L
 
@@ -37,6 +42,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private lateinit var shakeEventLiveData: LiveData<GameEvents>
 
     private var userId: String = ""
+    private var currentUser: User? = null
+
+    var db = FirebaseFirestore.getInstance()
 
 
     /** Here we can show progress bar or some kind of it
@@ -115,6 +123,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun onLoginComplete(id: String) {
         userId = id
+        if (id.isNotEmpty())
+            checkForEntityInDB(id)
     }
 
     private fun getCurrentRound(round: Int): GameEvents {
@@ -150,5 +160,39 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         if (shakeEventLiveData.hasObservers()) {
             shakeEventLiveData.removeObserver(currentEventObserver)
         }
+    }
+
+    private fun checkForEntityInDB(id: String) {
+        db.collection("users")
+            .whereEqualTo("id", id)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val usersList: List<User> = querySnapshot.toObjects(User::class.java)
+                checkUsers(usersList)
+            }
+            .addOnFailureListener { exception ->
+                // Произошла ошибка при получении данных
+            }
+    }
+
+    private fun checkUsers(userList: List<User>) {
+        val user = HashMap<String, Any>()
+        if (userList.isEmpty()) {
+            user.put("id", userId)
+            user.put("gameSessions", listOf<GameSession>(GameSession()))
+
+            db.collection("users")
+                .add(user)
+                .addOnSuccessListener { documentReference ->
+                    Log.d("AAA", "DocumentSnapshot added with ID: " + documentReference.id)
+                }
+                .addOnFailureListener { e -> Log.e("AAA", "Error adding document", e) }
+        } else {
+            currentUser = userList.get(0)
+        }
+    }
+
+    private fun updateCurrentUser(round: Int){
+
     }
 }
