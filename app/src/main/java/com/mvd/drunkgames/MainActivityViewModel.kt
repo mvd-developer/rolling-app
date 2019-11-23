@@ -150,6 +150,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 shakeEventLiveData!!.removeObserver(currentEventObserver)
             }
             userFailed.postValue(true)
+            if (numberOfRounds > 0)
+                updateCurrentUser(numberOfRounds)
         } else {
             numberOfRounds += 1
         }
@@ -232,6 +234,22 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun updateCurrentUser(round: Int) {
+        val modifyGameSessions = mutableListOf<GameSession>()
+        val gameSession = GameSession()
+        gameSession.date = System.currentTimeMillis()
+        gameSession.rounds = round
+        currentUser!!.gameSessions?.let { modifyGameSessions.addAll(it) }
+        modifyGameSessions.add(gameSession)
+        currentUser!!.gameSessions = modifyGameSessions
 
+        db.collection("users")
+            .document(currentUser!!.id)
+            .set(currentUser!!)
+            .addOnSuccessListener {
+                // Успешная запись
+            }
+            .addOnFailureListener {
+                // Произошла ошибка при записи
+            }
     }
 }

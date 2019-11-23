@@ -2,6 +2,6 @@ package com.mvd.drunkgames.entity
 
 
 class GameSession() {
-     val date: Long = 0
-     val rouns: Int = 0
+     var date: Long = 0
+     var rounds: Int = 0
 }

@@ -25,6 +25,7 @@
     <string name="voice_detection_level">Уровень детектирования голоса:</string>
     <string name="accelerometr_detection_level">Уровень детектирования трясения:</string>
     <string name="current_round">Round %1$d</string>
+    <string name="rounds">Rounds: </string>
 
     <string name="default_client_id">153625047009-jaltefelr94gaf4eqmmhidsu9o1ucgc7.apps.googleusercontent.com</string>
     <string name="sign_in">Sign In</string>
