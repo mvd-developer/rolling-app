@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     private fun showUserFailedDialog() {
         chronometer.stop()
         tvButtonText.setText(R.string.start_game)
-        DialogFailed.getInstance(numberOfRounds)
+        DialogFailed.getInstance(numberOfRounds, supportFragmentManager)
                 .show(supportFragmentManager, DialogFailed::class.java.simpleName)
     }
 

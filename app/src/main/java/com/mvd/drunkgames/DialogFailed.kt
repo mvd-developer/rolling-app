@@ -10,6 +10,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.mvd.drunkgames.base.DialogCallback
 
 
@@ -22,12 +23,18 @@ class DialogFailed : DialogFragment() {
 
     companion object {
         private const val NUMBER_OF_ROUNDS = "NUMBER_OF_ROUNDS"
-        fun getInstance(numberOfRounds: Int): DialogFailed {
-            val dialog = DialogFailed()
+        fun getInstance(numberOfRounds: Int, supportFragmentManager: FragmentManager): DialogFailed {
+            val fragment = supportFragmentManager.findFragmentByTag(DialogFailed::class.java.name)
+            val instance: DialogFailed
+            instance = if (fragment is DialogFailed) {
+                fragment
+            } else {
+                DialogFailed()
+            }
             val bundle = Bundle()
             bundle.putInt(NUMBER_OF_ROUNDS, numberOfRounds)
-            dialog.arguments = bundle
-            return dialog
+            instance.arguments = bundle
+            return instance
         }
     }
 
