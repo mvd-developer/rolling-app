@@ -39,6 +39,7 @@ class SoundModule(private val application: Application, callback: (errorMessage:
     }
 
     fun playMusic() {
+        mp.setVolume(0.1f, 0.1f)
         mp.isLooping = true
         mp.start()
     }
