@@ -5,8 +5,8 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.os.SystemClock
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.LinearInterpolator
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         tvButtonText = findViewById(R.id.tv_btn_text)
@@ -170,11 +172,6 @@ class MainActivity : AppCompatActivity(), DialogCallback {
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        this.finish()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_settings, menu)
@@ -185,6 +182,10 @@ class MainActivity : AppCompatActivity(), DialogCallback {
         return when (item.itemId) {
             R.id.action_settings -> {
                 this.startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
+            android.R.id.home -> {
+                this.finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -23,4 +23,6 @@
     <string name="current_round">Round %1$d</string>
 
     <string name="default_client_id">153625047009-jaltefelr94gaf4eqmmhidsu9o1ucgc7.apps.googleusercontent.com</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or_create_an_account_for_your_team">or create an account for your team!</string>
 </resources>

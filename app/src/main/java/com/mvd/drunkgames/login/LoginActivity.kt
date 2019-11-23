@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.mvd.drunkgames.MainActivity
 import com.mvd.drunkgames.R
-import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -36,15 +35,16 @@ class LoginActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         viewModel = ViewModelProviders.of(this)[LoginActivityViewModel::class.java]
 
         googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_client_id))
-            .requestEmail()
-            .build()
+                .requestIdToken(getString(R.string.default_client_id))
+                .requestEmail()
+                .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
         mAuth = FirebaseAuth.getInstance()
 
@@ -90,21 +90,21 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth!!.signInWithCredential(credential)
-            .addOnCompleteListener(this,
-                OnCompleteListener<AuthResult> { task ->
-                    if (task.isSuccessful) {
-                        val user = mAuth!!.getCurrentUser()
+                .addOnCompleteListener(this,
+                        OnCompleteListener<AuthResult> { task ->
+                            if (task.isSuccessful) {
+                                val user = mAuth!!.getCurrentUser()
 
-                        //login complete
-                        if (user != null) {
-                            startGame(user.uid)
-                        }
+                                //login complete
+                                if (user != null) {
+                                    startGame(user.uid)
+                                }
 
-                    } else {
+                            } else {
 
-                    }
+                            }
 
-                })
+                        })
     }
 
 }

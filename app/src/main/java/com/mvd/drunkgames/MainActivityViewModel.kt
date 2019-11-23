@@ -55,9 +55,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             hasEvent = true
         }
     }
-    private lateinit var shakeEventLiveData: LiveData<GameEvents>
-    private lateinit var voiceEventLiveData: LiveData<GameEvents>
-    private var userActionEventLiveData = MutableLiveData<GameEvents>()
+    private var shakeEventLiveData: LiveData<GameEvents>? = null
+    private var voiceEventLiveData: LiveData<GameEvents>? = null
+    private val userActionEventLiveData = MutableLiveData<GameEvents>()
 
     private var userId: String = ""
     private var currentUser: User? = null
@@ -91,9 +91,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             startNewGame()
         }
         shakeEventLiveData = shakeModule.subscribeUpdates()
-        shakeEventLiveData.observeForever(currentEventObserver)
+        shakeEventLiveData!!.observeForever(currentEventObserver)
         voiceEventLiveData = voiceDetectModule.subscribeUpdates()
-        voiceEventLiveData.observeForever(currentEventObserver)
+        voiceEventLiveData!!.observeForever(currentEventObserver)
         userActionEventLiveData.observeForever(currentEventObserver)
 
         numberOfRounds = 0
@@ -142,11 +142,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
             voiceDetectModule.unSubscribeUpdates()
             shakeModule.unSubscribeUpdates()
-            if (voiceEventLiveData.hasObservers()) {
-                voiceEventLiveData.removeObserver(currentEventObserver)
+            if (voiceEventLiveData!!.hasObservers()) {
+                voiceEventLiveData!!.removeObserver(currentEventObserver)
             }
-            if (shakeEventLiveData.hasObservers()) {
-                shakeEventLiveData.removeObserver(currentEventObserver)
+            if (shakeEventLiveData!!.hasObservers()) {
+                shakeEventLiveData!!.removeObserver(currentEventObserver)
             }
             userFailed.postValue(true)
         } else {
@@ -200,11 +200,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         super.onCleared()
         soundModule.onDestroy()
 
-        if (shakeEventLiveData.hasObservers()) {
-            shakeEventLiveData.removeObserver(currentEventObserver)
+        if (shakeEventLiveData != null && shakeEventLiveData!!.hasObservers()) {
+            shakeEventLiveData!!.removeObserver(currentEventObserver)
         }
-        if (voiceEventLiveData.hasObservers()) {
-            voiceEventLiveData.removeObserver(currentEventObserver)
+        if (voiceEventLiveData != null && voiceEventLiveData!!.hasObservers()) {
+            voiceEventLiveData!!.removeObserver(currentEventObserver)
         }
         if (userActionEventLiveData.hasObservers()) {
             userActionEventLiveData.removeObserver(currentEventObserver)
@@ -214,21 +214,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private fun checkForEntityInDB(id: String) {
         val docRef = db.collection("users").document(id)
         docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    currentUser = document.toObject(User::class.java)
-                } else {
-                    val newUser = User()
-                    newUser.id = userId
-                    newUser.gameSessions = listOf(GameSession())
-                    docRef.set(newUser)
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        currentUser = document.toObject(User::class.java)
+                    } else {
+                        val newUser = User()
+                        newUser.id = userId
+                        newUser.gameSessions = listOf(GameSession())
+                        docRef.set(newUser)
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "get failed with ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.d("TAG", "get failed with ", exception)
+                }
     }
-
 
 
     private fun updateCurrentUser(round: Int) {
