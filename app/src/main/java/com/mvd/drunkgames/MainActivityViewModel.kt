@@ -43,9 +43,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         private set
 
     private var numberOfRounds = 0
-        private set(value) {
-            numberOfRoundsLiveData.postValue(value)
-        }
     val numberOfRoundsLiveData = MutableLiveData<Int>()
 
     var isAvailableForNewGame = AtomicBoolean(true)
@@ -104,6 +101,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         userActionEventLiveData.observeForever(currentEventObserver)
 
         numberOfRounds = 0
+        numberOfRoundsLiveData.postValue(numberOfRounds)
     }
 
     private fun postDelayed(delayMillis: Long, callback: () -> Unit) {
@@ -158,6 +156,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
         } else {
             numberOfRounds += 1
+            numberOfRoundsLiveData.postValue(numberOfRounds)
         }
     }
 
